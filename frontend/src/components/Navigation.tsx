@@ -38,22 +38,30 @@ export function Navigation() {
     }
   };
 
-  const handleHomeClick = (e: React.MouseEvent) => {
-    if (location.pathname === '/') {
-      e.preventDefault();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  };
+  // const handleHomeClick = (e: React.MouseEvent) => {
+  //   if (location.pathname === '/') {
+  //     e.preventDefault();
+  //     window.scrollTo({ top: 0, behavior: 'smooth' });
+  //   }
+  // };
 
   return (
     <nav className="flex items-center space-x-6">
-      <Link 
-        to="/" 
-        onClick={handleHomeClick}
-        className="text-sm text-gray-700 hover:text-blue-600 font-medium transition-colors"
-      >
-        Home
-      </Link>
+<Link 
+  to="/" 
+  onClick={() => {
+    if (location.pathname === "/") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }, 100); // chờ route đổi xong rồi scroll
+    }
+  }}
+  className="text-sm text-gray-700 hover:text-blue-600 font-medium transition-colors"
+>
+  Home
+</Link>
       
       <div ref={dropdownRef} className="relative">
         <button

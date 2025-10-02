@@ -1,6 +1,7 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { SearchBar } from"../components/SearchBar";
+import { SearchBar } from "../components/SearchBar"; // ✅ đúng
+
 import { Navigation } from"../components/Navigation";
 import { BackToTopButton } from"../components/BackToTopButton";
 import { Footer } from"../components/Footer";

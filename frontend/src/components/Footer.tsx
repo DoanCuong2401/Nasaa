@@ -23,10 +23,10 @@ export function Footer() {
           <div className="md:col-span-2">
             <h3 className="text-xl font-bold mb-4">NEROMIND</h3>
             <p className="text-gray-300 mb-4">
-              We are a team from Hanoi University of Science and Technology,
-              joining the NASA Space Apps Challenge 2025. Our mission is to
-              advance space biology research and share knowledge for the
-              benefit of humanity.
+              There is a three-star making a straight line in the night sky 
+              It's been seen through The Eyes of A child
+              Darkness doesn't mean loneliness 
+              It's about Contemplation
             </p>
             <p className="text-blue-400 font-semibold">SHARE TO BE SHARED</p>
           </div>

@@ -2,18 +2,18 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Footer } from "../components/Footer";
 import { BackToTopButton } from "../components/BackToTopButton";
-
+import { SearchBar } from "../components/SearchBar";
 export default function HomePage() {
     const navigate = useNavigate();
-    const [searchQuery, setSearchQuery] = useState("");
+    // const [searchQuery, setSearchQuery] = useState("");
     const [showTopics, setShowTopics] = useState(false);
 
-    const handleSearch = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (searchQuery.trim()) {
-            navigate(`/article?query=${encodeURIComponent(searchQuery)}`);
-        }
-    };
+    // const handleSearch = (e: React.FormEvent) => {
+    //     e.preventDefault();
+    //     if (searchQuery.trim()) {
+    //         navigate(`/article?query=${encodeURIComponent(searchQuery)}`);
+    //     }
+    // };
 
     const topics = [
         { id: 1, key: "vertebrate", name: "Vertebrate", emoji: "🦴" },
@@ -36,30 +36,17 @@ export default function HomePage() {
                         onClick={() => navigate("/")}
                         className="flex items-center space-x-2 cursor-pointer"
                     >
-                        <img src="/images/logo.png" alt="Logo" className="h-10 w-10" />
-                        <span className="text-xl font-bold text-blue-600">AstroMorphosis</span>
+                        {/* <img src="/images/logo.png" alt="Logo" className="h-10 w-10" /> */}
+                        <span className="text-xl font-bold text-blue-600">NASA Space Apps Challenge</span>
                     </div>
-
                     {/* SearchBar ở giữa */}
-                    <form
-                        onSubmit={handleSearch}
-                        className="relative flex-1 mx-8 max-w-lg"
-                    >
-                        <input
-                            type="text"
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            placeholder="Search..."
-                            className="w-full px-4 py-1.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
-                        />
+                    <SearchBar className="mx-8 flex-1" placeholder="Search articles..." />
                         <button
                             type="submit"
                             className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-blue-600"
                         >
-                            🔍
                         </button>
-                    </form>
-
+                    
                     {/* Nav Links */}
                     <nav className="flex items-center space-x-4 text-sm font-medium text-gray-700">
                         <button onClick={() => navigate("/")} className="hover:text-blue-600">
@@ -117,14 +104,26 @@ export default function HomePage() {
             </header>
 
             {/* Hero Section */}
-            <section className="py-24 text-center bg-gradient-to-b from-white to-blue-50">
-                <h1 className="text-6xl font-bold text-gray-900 mb-4 tracking-tight">
-                    AstroMorphosis
-                </h1>
-                <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                    Exploring biological transformations in space environments through cutting-edge research
-                </p>
-            </section>
+<section className="pt-12 pb-20 text-center bg-gradient-to-b from-white to-blue-50">
+  {/* Logo to, gần navbar hơn */}
+  <img 
+    src="/images/logo.png" 
+    alt="Logo" 
+    className="mx-auto mb-6 h-64 w-64 md:h-80 md:w-80 drop-shadow-2xl"
+  />
+
+  {/* Chữ to, xám đậm */}
+  <h1 className="text-7xl md:text-8xl font-extrabold tracking-tight mb-4 text-gray-900">
+    AstroMorphosis
+  </h1>
+
+  {/* Subtitle */}
+  <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+    Exploring biological transformations in space environments through cutting-edge research
+  </p>
+</section>
+
+
 
 
       {/* Topics Section */}
