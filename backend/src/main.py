@@ -54,16 +54,46 @@ class SearchRequest(BaseModel):
 
 @app.post('/search')
 def search_documents(body: SearchRequest):
+    """Hybrid smart search: semantic + textual + keyword.
+
+    - Vector similarity via Weaviate on title and summary embeddings
+    - Textual fallback/expansion: ILIKE across title, summary, and keyword names
+    - Merges, de-duplicates, preserves semantic ranking first, then textual
+    """
     try:
+        # 1) Semantic search
         query_vector = embedder.embed(body.query)
-        doc_ids = vectorstore.similarity_search(
+        vector_ids = vectorstore.similarity_search(
             query_vector=query_vector,
             k=body.limit
         )
-        docs = db.get_documents_by_ids(doc_ids)
+
+        # 2) Textual search (expand coverage for related terms/keywords)
+        textual_docs = db.search_documents_textual(body.query, limit=body.limit)
+        textual_ids = [d.id for d in textual_docs]
+
+        # 3) Merge and de-duplicate while keeping vector ranking priority
+        seen = set()
+        merged_ids = []
+        for did in vector_ids:
+            if did not in seen:
+                merged_ids.append(did)
+                seen.add(did)
+        for did in textual_ids:
+            if did not in seen:
+                merged_ids.append(did)
+                seen.add(did)
+
+        # Enforce final limit while preserving order
+        merged_ids = merged_ids[: body.limit]
+        docs = db.get_documents_by_ids(merged_ids)
+        # Preserve merged ranking order
+        id_to_doc = {d.id: d for d in docs}
+        ordered_docs = [id_to_doc[i] for i in merged_ids if i in id_to_doc]
+
         return {
             'status': 'success',
-            'data': docs
+            'data': ordered_docs
         }
     except Exception as e:
         return {
