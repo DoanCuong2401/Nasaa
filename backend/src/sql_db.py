@@ -1,5 +1,5 @@
 from .config import POSTGRES_CONFIG
-from sqlalchemy import create_engine, inspect
+from sqlalchemy import create_engine, inspect, or_
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import SQLAlchemyError
 from .models import Base, Category, Keyword, Document
@@ -157,5 +157,43 @@ class SqlDB:
         db = self.get_session()
         try:
             return db.query(Document).filter(Document.id.in_(ids)).all()
+        finally:
+            db.close()
+
+    # --- Textual search helpers ---
+    def search_documents_textual(self, query: str, limit: int = 10):
+        """Perform simple textual search across title, summary, and keyword names.
+
+        Uses case-insensitive substring matching (ILIKE) and returns up to `limit` documents.
+        """
+        db = self.get_session()
+        try:
+            # Normalize query and create patterns for token-based OR matching
+            raw = (query or "").strip()
+            if not raw:
+                return []
+
+            tokens = [t for t in raw.split() if t]
+            patterns = [f"%{t}%" for t in tokens] or [f"%{raw}%"]
+
+            title_filters = [Document.title.ilike(p) for p in patterns]
+            summary_filters = [Document.summary.ilike(p) for p in patterns]
+            keyword_filters = [Keyword.name.ilike(p) for p in patterns]
+
+            clause = or_(
+                or_(*title_filters),
+                or_(*summary_filters),
+                or_(*keyword_filters),
+            )
+
+            # Join to keywords so keyword name predicates work, but avoid duplicates via DISTINCT
+            q = (
+                db.query(Document)
+                .outerjoin(Document.keywords)
+                .filter(clause)
+                .distinct(Document.id)
+                .limit(limit)
+            )
+            return q.all()
         finally:
             db.close()
