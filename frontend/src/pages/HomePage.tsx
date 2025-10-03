@@ -3,6 +3,8 @@ import { useState } from "react";
 import { Footer } from "../components/Footer";
 import { BackToTopButton } from "../components/BackToTopButton";
 import { SearchBar } from "../components/SearchBar";
+import StarBackground from "../components/StarBackground";
+
 export default function HomePage() {
     const navigate = useNavigate();
     // const [searchQuery, setSearchQuery] = useState("");
@@ -25,9 +27,9 @@ export default function HomePage() {
     ];
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex flex-col">
-
-            {/* ✅ NavBar (Logo trái, Search giữa, Links phải) */}
+        <div className="min-h-screen flex flex-col relative">
+          <StarBackground />
+{/* ✅ NavBar (Logo trái, Search giữa, Links phải) */}
             <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 shadow">
                 <div className="container mx-auto px-6 py-3 flex items-center justify-between">
 
@@ -86,6 +88,7 @@ export default function HomePage() {
                             )}
                         </div>
 
+
                         <button
                             onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}
                             className="hover:text-blue-600"
@@ -104,7 +107,7 @@ export default function HomePage() {
             </header>
 
             {/* Hero Section */}
-<section className="pt-12 pb-20 text-center bg-gradient-to-b from-white to-blue-50">
+<section className="pt-12 pb-20 text-center from-white to-blue-50">
   {/* Logo to, gần navbar hơn */}
   <img 
     src="/images/logo.png" 
@@ -113,12 +116,13 @@ export default function HomePage() {
   />
 
   {/* Chữ to, xám đậm */}
-  <h1 className="text-7xl md:text-8xl font-extrabold tracking-tight mb-4 text-gray-900">
-    AstroMorphosis
-  </h1>
+<h1 className="text-7xl md:text-8xl font-extrabold tracking-tight mb-4 text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.8)]">
+  AstroMorphosis
+</h1>
+
 
   {/* Subtitle */}
-  <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+  <p className="text-lg md:text-xl text-white max-w-2xl mx-auto">
     Exploring biological transformations in space environments through cutting-edge research
   </p>
 </section>
@@ -128,7 +132,7 @@ export default function HomePage() {
 
       {/* Topics Section */}
       <section id="topics" className="py-20 container mx-auto px-6">
-        <h2 className="text-4xl font-bold text-center mb-12">Topics</h2>
+        <h2 className="text-4xl font-bold text-center mb-12 text-white">Topics</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {topics.map((topic) => (
             <div
@@ -144,10 +148,10 @@ export default function HomePage() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-16 bg-gray-50">
+      <section id="about" className="py-16 ">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl font-bold text-gray-900 mb-8">About Us</h2>
+            <h2 className="text-4xl font-bold text-white mb-8">About Us</h2>
             <div className="bg-white rounded-xl p-8 shadow-lg">
               <p className="text-lg text-gray-700 leading-relaxed mb-6">
                 We are a team from <strong>Hanoi University of Science and Technology</strong>, joining the 
@@ -163,10 +167,10 @@ export default function HomePage() {
       </section>
 
       {/* Feedback Section */}
-      <section id="feedback" className="py-16 bg-white">
+      <section id="feedback" className="py-16 ">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl font-bold text-gray-900 text-center mb-12">Share Your Thoughts</h2>
+            <h2 className="text-4xl font-bold text-white text-center mb-12">Share Your Thoughts</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="bg-blue-50 rounded-xl p-6">

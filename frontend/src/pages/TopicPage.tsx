@@ -88,14 +88,14 @@ export default function TopicPage() {
                 className="flex items-center space-x-2 text-gray-600 hover:text-blue-600 transition-colors"
               >
                 <ArrowLeft className="w-5 h-5" />
-                <span>Back to Home</span>
+                <span> Neromind </span>
               </Link>
-              <span className="text-gray-400">|</span>
+              <span className="text-gray-400"> </span>
               <button
                 onClick={() => navigate(-1)}
                 className="text-gray-600 hover:text-blue-600 transition-colors"
               >
-                Back
+                
               </button>
             </div>
 
@@ -157,7 +157,7 @@ export default function TopicPage() {
                         </div>
 
                         <p className="text-gray-700 mb-4 leading-relaxed">
-                          {doc.summary || "No summary available."}
+                          {doc.summary || "Still Researching"}
                         </p>
                       </div>
 
