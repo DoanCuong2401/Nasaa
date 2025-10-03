@@ -11,7 +11,9 @@ function App() {
         <Routes>
           {/* Trang chủ */}
           <Route path="/" element={<HomePage />} />
-          
+          <>
+
+    </>
           {/* Trang Topic */}
           <Route path="/topic/:id" element={<TopicPage />} />
 
